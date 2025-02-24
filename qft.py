@@ -22,20 +22,20 @@ def apply_qft(circuit, n_qubits):
 
 
 # Função para aplicar a IQFT em um circuito quântico
-def apply_iqft(circuit, n_qubits):
+def apply_iqft(inverse_circuit, n_qubits):
     # Reordena os qubits no início (inverso da QFT)
     for qubit in range(n_qubits // 2):
-        circuit.swap(qubit, n_qubits - qubit - 1)
+        inverse_circuit.swap(qubit, n_qubits - qubit - 1)
     
     # Aplica as portas de rotação controlada inversa e Hadamard
     for qubit in range(n_qubits):
         # Aplica as portas de rotação controlada inversa
         for control_qubit in range(qubit):
             angle = -np.pi / (2 ** (qubit - control_qubit))
-            circuit.cp(angle, control_qubit, qubit)
+            inverse_circuit.cp(angle, control_qubit, qubit)
         
         # Aplica a porta Hadamard no qubit atual
-        circuit.h(qubit)
+        inverse_circuit.h(qubit)
 
 # Número de qubits
 n_qubits = 4
@@ -46,8 +46,8 @@ creg = ClassicalRegister(n_qubits, name="c")
 circuit = QuantumCircuit(qubits, creg)
 inverse_circuit = QuantumCircuit(qubits, creg)
 
-# Aplica a QFT ao circuito
-apply_qft(inverse_circuit, n_qubits)
+# Aplica a QFT/IQFT ao circuito
+apply_iqft(inverse_circuit, n_qubits)
 
 # Desenha o circuito
 print(inverse_circuit.draw("latex_source"))
