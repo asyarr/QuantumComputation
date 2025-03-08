@@ -1,0 +1,47 @@
+from qiskit import QuantumRegister, ClassicalRegister, QuantumCircuit
+from numpy import pi
+
+qreg_q = QuantumRegister(5, 'q')
+creg_c = ClassicalRegister(1, 'c')
+circuit = QuantumCircuit(qreg_q, creg_c)
+
+circuit.u(pi / 2, pi / 2, pi / 2, qreg_q[3])
+circuit.u(pi / 8, pi / 8, pi / 8, qreg_q[1])
+circuit.u(pi / 16, pi / 16, pi / 16, qreg_q[0])
+circuit.u(pi / 4, pi / 4, pi / 4, qreg_q[2])
+circuit.cx(qreg_q[2], qreg_q[4])
+circuit.cx(qreg_q[3], qreg_q[4])
+circuit.u(2 * pi, 2 * pi, 2 * pi, qreg_q[4])
+circuit.cx(qreg_q[3], qreg_q[4])
+circuit.cx(qreg_q[2], qreg_q[4])
+circuit.cx(qreg_q[1], qreg_q[4])
+circuit.cx(qreg_q[3], qreg_q[4])
+circuit.u(pi, pi, pi, qreg_q[4])
+circuit.cx(qreg_q[3], qreg_q[4])
+circuit.cx(qreg_q[1], qreg_q[4])
+circuit.cx(qreg_q[0], qreg_q[4])
+circuit.cx(qreg_q[3], qreg_q[4])
+circuit.u(pi / 2, pi / 2, pi / 2, qreg_q[4])
+circuit.cx(qreg_q[3], qreg_q[4])
+circuit.cx(qreg_q[0], qreg_q[4])
+circuit.cx(qreg_q[1], qreg_q[4])
+circuit.cx(qreg_q[2], qreg_q[4])
+circuit.u(pi / 2, pi / 2, pi / 2, qreg_q[4])
+circuit.cx(qreg_q[2], qreg_q[4])
+circuit.cx(qreg_q[1], qreg_q[4])
+circuit.cx(qreg_q[0], qreg_q[4])
+circuit.cx(qreg_q[2], qreg_q[4])
+circuit.u(pi / 4, pi / 4, pi / 4, qreg_q[4])
+circuit.cx(qreg_q[2], qreg_q[4])
+circuit.cx(qreg_q[0], qreg_q[4])
+circuit.cx(qreg_q[0], qreg_q[4])
+circuit.cx(qreg_q[1], qreg_q[4])
+circuit.u(pi / 8, pi / 8, pi / 8, qreg_q[4])
+circuit.cx(qreg_q[1], qreg_q[4])
+circuit.cx(qreg_q[0], qreg_q[4])
+
+# Draw the circuit
+print("4-Qubit Diagonal Phase Circuit for Quadratic Potential:")
+print(circuit.draw("text"))  # Use "mpl" for a graphical output
+# Visualização gráfica do circuito
+circuit.draw("mpl", filename="quadratic_potential_circuit.png")
